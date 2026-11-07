@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#f6f1e7">
+<title>マギアハンター ― 墨と紙の魔導書</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="cv"></canvas>
+
+<!-- 戦闘HUD -->
+<div id="hud" class="hidden">
+  <div class="hud-row">
+    <div class="hud-hp">
+      <div class="bar hp"><i id="hp-fill"></i><span id="hp-text">100 / 100</span></div>
+      <div class="hud-lv"><b id="lv-text">Lv 1</b><div class="bar xp"><i id="xp-fill"></i></div></div>
+    </div>
+    <button class="pause-btn speed-btn hidden" id="speed-btn" data-act="speed" aria-label="戦闘速度">×1</button>
+    <button class="pause-btn" data-act="pause" aria-label="ポーズ">Ⅱ</button>
+  </div>
+  <div class="hud-row hud-info">
+    <span class="chip" id="wave-text">第1波</span>
+    <span class="chip" id="time-text">0:00</span>
+    <span class="chip gold" id="gold-text">金 0</span>
+    <span class="chip" id="loot-text">戦利品 0</span>
+  </div>
+  <div id="boss-bar" class="boss-bar hidden"><div class="boss-name" id="boss-name"></div><div class="bar boss"><i id="boss-fill"></i></div></div>
+</div>
+<div id="banner" class="banner hidden"></div>
+<div id="toasts"></div>
+
+<main id="app">
+  <!-- タイトル -->
+  <section id="s-title" class="screen center active">
+    <div class="logo">
+      <div class="logo-sub">INK &amp; PAPER GRIMOIRE</div>
+      <h1><span>マギア</span><span>ハンター</span></h1>
+      <div class="logo-rule"><i></i><b>魔</b><i></i></div>
+      <p class="logo-tag">― 墨と紙の魔導書 ―</p>
+    </div>
+    <div class="menu">
+      <button class="btn primary" data-act="start">はじめる</button>
+      <button class="btn" data-act="continue" id="btn-continue">つづきから</button>
+      <button class="btn ghost" data-act="settings">設定</button>
+    </div>
+    <p class="foot">魔法は自動で放たれる。汝の仕事は、育てることだ。</p>
+  </section>
+
+  <!-- ホーム -->
+  <section id="s-home" class="screen">
+    <header class="bar-top">
+      <h2>出撃選択</h2>
+      <div class="top-right"><span class="coin" id="home-gold">0</span></div>
+    </header>
+    <div class="scroll" id="stage-list"></div>
+    <div class="panel stage-panel" id="stage-detail"></div>
+    <footer class="bar-bottom">
+      <button class="btn" data-act="goEquip">装備</button>
+      <button class="btn primary wide" data-act="sortie" id="btn-sortie">出撃</button>
+      <button class="btn ghost" data-act="settings">設定</button>
+    </footer>
+  </section>
+
+  <!-- 装備 -->
+  <section id="s-equip" class="screen">
+    <header class="bar-top">
+      <button class="btn small" data-act="goHome">‹ 戻る</button>
+      <h2>装備</h2>
+      <div class="top-right"><span class="coin" id="eq-gold">0</span></div>
+    </header>
+    <div class="slots" id="slot-row"></div>
+    <div class="tabs" id="inv-tabs"></div>
+    <div class="inv-note" id="inv-note"></div>
+    <div class="scroll inv-grid" id="inv-grid"></div>
+    <footer class="bar-bottom">
+      <button class="btn small" data-act="sellCommons">コモン一括売却</button>
+    </footer>
+  </section>
+
+  <!-- 結果 -->
+  <section id="s-result" class="screen">
+    <div class="panel result" id="result-body"></div>
+  </section>
+</main>
+
+<!-- レベルアップ -->
+<div id="ov-levelup" class="overlay hidden">
+  <div class="sheet">
+    <div class="lu-head"><span>LEVEL UP</span><b id="lu-level">Lv 2</b></div>
+    <p class="lu-sub">頁を一枚、選びたまえ</p>
+    <p class="lu-slots" id="lu-slots"></p>
+    <div id="lu-cards" class="cards"></div>
+    <button class="btn small reroll-btn" id="lu-reroll" data-act="reroll">引き直す（無料 残り2回）</button>
+  </div>
+</div>
+
+<!-- ポーズ -->
+<div id="ov-pause" class="overlay hidden">
+  <div class="sheet small">
+    <h3>一時停止</h3>
+    <div class="menu">
+      <button class="btn primary" data-act="resume">再開</button>
+      <button class="btn" data-act="toggleMute" id="pause-mute">効果音：ON</button>
+      <button class="btn ghost" data-act="retreat">撤退する</button>
+    </div>
+  </div>
+</div>
+
+<!-- 設定 -->
+<div id="ov-settings" class="overlay hidden">
+  <div class="sheet small">
+    <h3>設定</h3>
+    <div class="menu">
+      <button class="btn" data-act="toggleMute" id="set-mute">効果音：ON</button>
+      <button class="btn" data-act="toggleFps" id="set-fps">30fpsモード：OFF</button>
+      <div class="save-io">
+        <textarea id="save-text" rows="3" spellcheck="false" placeholder="セーブコード（書き出すとここに表示。読み込むときはここに貼り付け）"></textarea>
+        <div class="menu row">
+          <button class="btn small" data-act="exportSave">書き出す</button>
+          <button class="btn small" data-act="importSave">読み込む</button>
+        </div>
+      </div>
+      <button class="btn danger" data-act="resetData">データ初期化</button>
+      <button class="btn primary" data-act="closeSettings">閉じる</button>
+    </div>
+    <p class="note">セーブは自動。この端末のブラウザ（localStorage）に保存されます。端末の都合で消えることがあるので、ときどき「書き出す」でコードを控えておくと安心です。</p>
+  </div>
+</div>
+
+<!-- 確認 -->
+<div id="ov-confirm" class="overlay hidden">
+  <div class="sheet small">
+    <p id="confirm-msg" class="confirm-msg"></p>
+    <div class="menu row">
+      <button class="btn" data-act="confirmNo">やめる</button>
+      <button class="btn primary" data-act="confirmYes" id="confirm-yes">はい</button>
+    </div>
+  </div>
+</div>
+
+<!-- 装備詳細 -->
+<div id="ov-item" class="overlay hidden">
+  <div class="sheet item-sheet" id="item-body"></div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
