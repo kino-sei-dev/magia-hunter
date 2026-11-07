@@ -230,3 +230,48 @@ button { font-family: inherit; color: inherit; }
   .menu { flex-direction: row; width: auto; }
   .foot { display: none; }
 }
+
+
+/* ---------- v2.0 追加 ---------- */
+.rune { font-family: var(--mincho); font-weight: 700; font-size: 15px; color: #6a3fa0; }
+.rune::before { content: "ルーン "; font-size: 11px; color: var(--ink); }
+.slots { grid-template-columns: repeat(3, 1fr); }
+.slot { min-height: 72px; }
+.slot .sk { font-size: 10px; color: var(--ink-soft); letter-spacing: 0.1em; }
+.tabs { overflow-x: auto; }
+.tab { flex: none; padding: 7px 8px; }
+.stage-panel { max-height: 36vh; overflow-y: auto; }
+.crown { display: inline-block; font-family: var(--mincho); font-size: 11px; font-weight: 700; padding: 0 5px; border: 1px solid var(--ink); letter-spacing: 0.05em; }
+.crown.c3 { background: #e3c06a; } .crown.c2 { background: #d8d8d8; } .crown.c1 { background: #d9a37a; }
+.ech { display: inline-block; font-family: var(--mincho); font-size: 11px; font-weight: 700; padding: 0 5px; margin: 0 2px; color: #fff; background: var(--ec, #777); border: 1px solid var(--ink); }
+.ech.res { opacity: 0.55; text-decoration: line-through; }
+.foes { margin: 6px 0 2px; border-top: 1px dashed var(--ink-soft); padding-top: 4px; }
+.foe { display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 2px 0; }
+.foe .fn { font-family: var(--mincho); font-weight: 700; }
+.foe small { color: var(--ink-soft); font-size: 10px; margin-left: 2px; }
+.card.syn { border-left-color: var(--vermilion); background: linear-gradient(135deg, var(--paper-2) 60%, rgba(179, 64, 42, 0.14)); }
+.card.syn .card-tag { color: var(--vermilion); font-weight: 900; }
+.card.opt .card-tag { color: #6a3fa0; }
+.card-trade { margin-top: 3px; font-size: 11px; font-weight: 700; color: var(--vermilion); }
+.sock-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+.sock { width: 44px; height: 44px; border: 1px dashed var(--ink-soft); background: var(--paper-2); display: grid; place-items: center; font-family: var(--mincho); font-size: 11px; font-weight: 700; cursor: pointer; color: var(--ink-soft); }
+.sock.fill { border: 2px solid var(--gc, var(--ink)); color: var(--gc, var(--ink)); background: var(--paper); }
+.gem-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; max-height: 38vh; overflow-y: auto; margin: 6px 0; }
+.gem { border: 1px solid var(--ink); border-left: 5px solid var(--gc, var(--ink)); background: var(--paper-2); padding: 5px 6px; text-align: left; font-size: 11.5px; cursor: pointer; display: flex; flex-direction: column; gap: 1px; position: relative; }
+.gem .gn { font-family: var(--mincho); font-weight: 700; color: var(--gc, var(--ink)); }
+.gem .gx { position: absolute; top: 2px; right: 4px; font-family: var(--mincho); font-weight: 900; font-size: 11px; }
+.gem .gfx { color: var(--vermilion); font-size: 10.5px; font-weight: 700; }
+.book-list { display: flex; flex-direction: column; gap: 8px; padding-top: 6px; }
+.book { border: 1px solid var(--ink); border-left: 6px solid var(--bc, var(--ink)); background: var(--paper-2); padding: 8px 10px; display: flex; gap: 10px; align-items: center; }
+.book.locked { opacity: 0.45; }
+.book .bi { flex: none; width: 38px; height: 38px; display: grid; place-items: center; font-family: var(--mincho); font-weight: 900; font-size: 20px; color: var(--paper); background: var(--bc, var(--ink)); }
+.book .bt { flex: 1; font-size: 12px; line-height: 1.45; }
+.book .bt b { font-family: var(--mincho); font-size: 14px; }
+.book .bt .bm { color: var(--ink-soft); font-size: 11px; }
+.book .btn { flex: none; font-size: 12px; padding: 7px 8px; letter-spacing: 0.05em; }
+.crown-big { text-align: center; font-family: var(--mincho); font-weight: 900; font-size: 22px; letter-spacing: 0.3em; margin: 4px 0 8px; }
+.crown-big .crown { font-size: 18px; padding: 2px 12px; }
+.rw { color: #6a3fa0; font-weight: 700; }
+.banner.roulette .big { font-size: 22px; }
+.bar.hp i { background: repeating-linear-gradient(135deg, #7a6a52 0 4px, #968466 4px 6px); }
+.bar-bottom { flex-wrap: wrap; }

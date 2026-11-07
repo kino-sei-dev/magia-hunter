@@ -14,17 +14,18 @@
 <div id="hud" class="hidden">
   <div class="hud-row">
     <div class="hud-hp">
-      <div class="bar hp"><i id="hp-fill"></i><span id="hp-text">100 / 100</span></div>
+      <div class="bar hp"><i id="hp-fill"></i><span id="hp-text">城壁 380 / 380</span></div>
       <div class="hud-lv"><b id="lv-text">Lv 1</b><div class="bar xp"><i id="xp-fill"></i></div></div>
     </div>
     <button class="pause-btn speed-btn hidden" id="speed-btn" data-act="speed" aria-label="戦闘速度">×1</button>
     <button class="pause-btn" data-act="pause" aria-label="ポーズ">Ⅱ</button>
   </div>
   <div class="hud-row hud-info">
-    <span class="chip" id="wave-text">第1波</span>
+    <span class="chip" id="wave-text">第1波 / 20</span>
     <span class="chip" id="time-text">0:00</span>
     <span class="chip gold" id="gold-text">金 0</span>
     <span class="chip" id="loot-text">戦利品 0</span>
+    <span class="chip" id="spell-text">魔法 1/5</span>
   </div>
   <div id="boss-bar" class="boss-bar hidden"><div class="boss-name" id="boss-name"></div><div class="bar boss"><i id="boss-fill"></i></div></div>
 </div>
@@ -52,12 +53,13 @@
   <section id="s-home" class="screen">
     <header class="bar-top">
       <h2>出撃選択</h2>
-      <div class="top-right"><span class="coin" id="home-gold">0</span></div>
+      <div class="top-right"><span class="coin" id="home-gold">0</span> <span class="rune" id="home-rune">0</span></div>
     </header>
     <div class="scroll" id="stage-list"></div>
     <div class="panel stage-panel" id="stage-detail"></div>
     <footer class="bar-bottom">
       <button class="btn" data-act="goEquip">装備</button>
+      <button class="btn" data-act="goBook">魔法書</button>
       <button class="btn primary wide" data-act="sortie" id="btn-sortie">出撃</button>
       <button class="btn ghost" data-act="settings">設定</button>
     </footer>
@@ -75,8 +77,20 @@
     <div class="inv-note" id="inv-note"></div>
     <div class="scroll inv-grid" id="inv-grid"></div>
     <footer class="bar-bottom">
-      <button class="btn small" data-act="sellCommons">コモン一括売却</button>
+      <button class="btn small" data-act="sellCommons" id="btn-sellc">コモン一括売却</button>
+      <button class="btn small hidden" data-act="mergeAll" id="btn-mergeall">ジェム全合成</button>
     </footer>
+  </section>
+
+  <!-- 魔法書 -->
+  <section id="s-book" class="screen">
+    <header class="bar-top">
+      <button class="btn small" data-act="goHome">‹ 戻る</button>
+      <h2>魔法書</h2>
+      <div class="top-right"><span class="coin" id="bk-gold">0</span> <span class="rune" id="bk-rune">0</span></div>
+    </header>
+    <p class="inv-note">魔法書Lvごとに、その魔法の威力 +4%。Lv5で質的ボーナス。強化にはゴールドと魔導ルーンが要ります。</p>
+    <div class="scroll book-list" id="book-list"></div>
   </section>
 
   <!-- 結果 -->
@@ -89,7 +103,7 @@
 <div id="ov-levelup" class="overlay hidden">
   <div class="sheet">
     <div class="lu-head"><span>LEVEL UP</span><b id="lu-level">Lv 2</b></div>
-    <p class="lu-sub">頁を一枚、選びたまえ</p>
+    <p class="lu-sub">頁を一枚、選びたまえ（複合魔法は狙い目）</p>
     <p class="lu-slots" id="lu-slots"></p>
     <div id="lu-cards" class="cards"></div>
     <button class="btn small reroll-btn" id="lu-reroll" data-act="reroll">引き直す（無料 残り2回）</button>
